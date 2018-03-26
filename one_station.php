@@ -480,8 +480,8 @@ function check_board()
 
 function xiaojo($key,$from) //小九接口函数，该函数可通用于其他程序
 {
-	$yourdb = "smallmummy";//小九账号
-	$yourpw = "@163.COMa";//小九密码
+	$yourdb = "xxxxxx";//小九账号
+	$yourpw = "xxxxx";//小九密码
 	$key=urlencode($key);
 	$yourdb=urlencode($yourdb);
 	$from=urlencode($from);//粉丝openid

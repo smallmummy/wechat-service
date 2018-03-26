@@ -9,32 +9,18 @@
 	微信论坛： www.weixen.com
  */
 
-//小九的接口
-//URL: http://1.chongqingweidao.sinaapp.com/index.php
-//token: smallmummy_cicilia
-
-//小五的接口
-//URL:http://www.v5kf.com/public/weixin?site_id=16326&salt=ondEhM
-//token: ondEhM
-//原始ID: gh_ef913c5ac779
-//小五调用的第三方API
-//[vs_api_url charset="utf-8" return="text"]http://1.chongqingweidao.sinaapp.com/input_consume_bonus_id.php?from=[vs_user=wxkey][/vs_api_url]
-//[vs_api_url charset="utf-8" return="text"]http://1.chongqingweidao.sinaapp.com/member.php?key=[vs=pa]&from=[vs_user=wxkey][/vs_api_url]
-
-
-
 
 header("content-Type: text/html; charset=utf-8");
 require_once(dirname(__FILE__) . "/wechat.php");
 define("DEBUG", true);
 
 //这里为你的小九后台账号,不填不能正常回复！！！！
-$yourdb="smallmummy";
-$yourpw="@163.COMa";
+$yourdb="xxxx";
+$yourpw="xxxx";
 
 //下面为可选配置的选项
 //http://1.chongqingweidao.sinaapp.com/index.php
-define("TOKEN", "smallmummy_cicilia");
+define("TOKEN", "xxxxxx");
 define("MOREN", "抱歉，我真的不知道肿么回答了，您可以用问*答*来教我");//丢包后默认回复
 define("FLAG", "@");//星标标识，默认为 @,用户对话里包含此标识则设置为星标，用于留言
 //配置结束

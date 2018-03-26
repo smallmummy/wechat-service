@@ -58,12 +58,12 @@ $member=new cls_member;
 
 
 //clicktell的API需要的信息
-$clicktell_username='smallmummy';
-$clicktell_pwd='QOJ7d8FB';
-$clicktell_api_id='3445516';
+$clicktell_username='xxxx';
+$clicktell_pwd='xxxx';
+$clicktell_api_id='xxxx';
 
 //被叫号码在后面的逻辑调用过程中赋值
-//$clicktell_to_number='6283879836699';
+//$clicktell_to_number='xxxxx';
 $valid_enter=true;
 if(is_array($_POST)&&count($_POST)>0)//先判断是否通过POST传值了
 {
@@ -125,10 +125,10 @@ if ($valid_enter==true)
 	$sms_return_content="";
 	
 	//************************************第一条短信发送中********************************
-	//被叫号码1,店里手机号, 6283857581267
-	//$clicktell_to_number='6287702427771';
+	//被叫号码1,店里手机号, xxx
+	//$clicktell_to_number='xxxx';
 	
-	$clicktell_to_number='6282139749191';
+	$clicktell_to_number='xxx';
 	
 	//拼接历史记录表中的错误短信的返回信息
 	$sms_return_content.="to:".$clicktell_to_number;
@@ -155,8 +155,8 @@ if ($valid_enter==true)
 	
 	
 	//************************************第二条短信发送中********************************	
-	//被叫号码2,老板手机号, 087702427771
-	$clicktell_to_number='6287702427771';
+	//被叫号码2,老板手机号, xxx
+	$clicktell_to_number='xxx';
 
 	
 	//拼接历史记录表中的错误短信的返回信息

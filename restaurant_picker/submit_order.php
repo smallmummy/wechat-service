@@ -58,9 +58,9 @@ $member=new cls_member;
 
 
 //clicktell的API需要的信息
-$clicktell_username='smallmummy';
-$clicktell_pwd='QOJ7d8FB';
-$clicktell_api_id='3445516';
+$clicktell_username='xxx';
+$clicktell_pwd='xxx';
+$clicktell_api_id='xxxx';
 
 //被叫号码在后面的逻辑调用过程中赋值
 //$clicktell_to_number='6283879836699';
