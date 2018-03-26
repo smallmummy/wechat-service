@@ -1,0 +1,344 @@
+SAE数据库
+DB app_chongqingweidao
+
+
+会员信息表
+tb_member
+--------------------------------
+会员序号					member_no
+微信ID(会员的昵称)			weixin_id
+加入日期					join_date
+目前消费积分				bonus
+目前活动积分				act_bonus
+用户的fakeid				fake_id 
+用户的推荐人的会员号			suggest_mem_no
+上一次签到的日期			last_sign_date
+连续签到的天数				continue_sign_days
+
+
+update `tb_member` set last_sign_date=timestamp(utc_timestamp(),'07:00:00')  WHERE member_no=121;
+update `tb_member` set last_sign_date="0000-00-00"  WHERE member_no=121;
+$tmp_current_timestamp=date("Y-m-d H:i:s",time()-3600);
+
+
+
+
+
+用户的历史消费记录表
+tb_his_consume
+--------------------------------
+小单的单号					bill_no （1: 积分增加;2：积分扣减;3:2014首次加入活动; 4:每日签到活动（暂停使用））
+消费金额					amt
+累计前积分					bonus_before
+累计后积分					bonus_after
+累计前活动积分				act_bonus_before
+累计后活动积分				act_bonus_after
+累计入库时间				exe_date
+会员序号					member_no
+会员fakeid				fake_id
+推荐信息					suggest_info
+
+
+用户留言表
+tb_customer_note
+--------------------------------
+留言序号(自增长)			note_id
+用户的fakeid				fake_id 
+会员序号					member_no
+微信ID					weixin_id
+入库时间					exe_date
+留言内容					note_content
+
+
+
+一站到底中存放用户回答问题的历史记录表
+question_user
+--------------------------------
+记录的编号(自增长)			id
+用户的fake_id(唯一标示)	openid
+问题的ID					qid
+用户已经回答的累计题目数		reply_nu
+用户连续回答正确的题目数		right_num
+用户的最高历史记录(连闯关数)	score
+上一次回答问题的时间			lastdate
+
+
+
+
+一站到底的题库
+question_bank
+--------------------------------
+问题的ID					id
+问题的分值					figure
+问题的类型					question_types
+问题的内容					question
+问题答案的选择项的个数		option_num
+A选择项					optionA
+B选择项					optionB
+C选择项					optionC
+D选择项					optionD
+E选择项					optionE
+F选择项					optionF
+正确答案的字符串标示			answer
+问题的分类					classify
+
+
+用户点菜历史记录表
+order_history
+--------------------------------
+记录ID(自增长)				record_id
+用户的fake_id				fake_id
+点餐内容(以匹配名称)		order_content
+用户点餐联系电话			order_hp
+用户点餐地址				order_add
+用户点餐备注				order_note
+点餐短信(已拼凑)			order_sms
+记录入库时间				order_exe_date
+是否给店里发送短信成功		suceed_sms(1为成功,0为失败,;发送是否成功, 存在多个号码,分单次发送,如果全部失败,则判定发送失败,反之则发送成功)
+错误短信的返回信息			sms_return_content(调用clicktell返回码,多次调用则拼接在一起)
+
+
+
+2014新加入会员活动表
+tb_2014_new_member
+--------------------------------
+记录ID(自增长)				record_id
+用户的fake_id				fake_id
+返回给用户的活动码			activity_id
+记录入库时间				exe_date
+
+
+
+错误处理消息表
+tb_err_msg
+--------------------------------
+记录ID(自增长)				record_id
+用户的fake_id				fake_id
+错误消息说明				err_msg
+记录入库时间				exe_date
+
+
+积分码表
+tb_consume_bonus_id
+--------------------------------
+积分码(主键)				consume_bonus_id
+积分点数					consume_amt
+是否已经被使用				already_used
+被使用时间					used_datetime
+使用者的fakeid			fake_id
+使用者的消费小票单号			bill_no
+
+
+
+
+
+
+
+SELECT left(consume_bonus_id,2),count(*) FROM `tb_consume_bonus_id` group by left(consume_bonus_id,2);
+
+select left(consume_bonus_id,4),count(*) FROM `tb_consume_bonus_id` where left(consume_bonus_id,1)="1" and mid(consume_bonus_id,3,2)="99" group by left(consume_bonus_id,4);
+
+select count(*),left(consume_bonus_id,2) FROM `tb_consume_bonus_id` where LENGTH(consume_bonus_id)=11 group by left(consume_bonus_id,2);
+
+select * from tb_consume_bonus_id where LENGTH(consume_bonus_id)=11
+
+
+**************************会员积分码生成机制**************************
+一共有12位,全部都是0~9的数字
+1234 5678 9012
+
+前两位对应可以获取到的积分数值
+11	100~150	100
+12	150~200	150
+13	200~250	200
+14	250~300	250
+15	300~350	300
+16	350~400	350
+17	400~450
+18	450~500
+19	500~550
+20	550~600
+21	600~650
+22	650~700
+23	700~750
+24	750~800
+25	800~850
+26	850~900
+27	900~950
+28	950~1000
+29	1000~1050
+30	1050~1100
+31	1100~1150
+32	1150~1200
+33	1200~1250
+34	1250~1300
+35	1300~1350
+36	1350~1400
+37	1400~1450
+38	1450~1500
+39	1500~1550
+40	1550~1600
+41	1600~1650
+42	1650~1700
+43	1700~1750
+44	1750~1800
+45	1800~1850
+46	1850~1900
+47	1900~1950
+48	1950~2000
+49	2000~2050
+50	2050~2100
+51	2100~2150
+52	2150~2200
+53	2200~2250
+54	2250~2300
+55	2300~2350
+56	2350~2400
+57	2400~2450
+58	2450~2500
+59	2500~2550
+60	2550~2600
+61	2600~2650
+62	2650~2700
+63	2700~2750
+64	2750~2800
+65	2800~2850
+66	2850~2900
+67	2900~2950
+68	2950~3000
+69	3000~3050
+70	3050~3100
+71	3100~3150
+72	3150~3200
+73	3200~3250
+74	3250~3300
+75	3300~3350
+76	3350~3400
+77	3400~3450
+78	3450~3500
+79	3500~3550
+80	3550~3600
+81	3600~3650
+82	3650~3700
+83	3700~3750
+84	3750~3800
+85	3800~3850
+86	3850~3900
+87	3900~3950
+88	3950~4000
+89	4000~4050
+90	4050~4100
+91	4100~4150
+92	4150~4200
+93	4200~4250
+94	4250~4300
+95	4300~4350
+96	4350~4400
+97	4400~4450
+98	4450~4500
+99	4500~4550
+
+第3位到第12位, 一共是10位数字, 全部都是0~9的数字
+在10,000,000,000个数字中, 产生15,000个会员累计码
+20(每天的桌数)*30(月)*12(年)*2(2年)= 14,400
+15,000/10,000,000,000=0.0000015
+重复的几率为一百万分之1
+
+--only for test
+
+112290102945   -  100
+193067861450   -  500
+
+6271 9306 7861 450
+
+select * from tb_consume_bonus_id where consume_bonus_id="193067861450";
+
+
+
+积分兑换校验码表
+tb_exchange_check_id
+--------------------------------
+积分码(主键)				check_id
+积分点数					exchange_amt
+是否已经被使用				already_used
+被使用时间					used_datetime
+使用者的fakeid			fake_id
+使用者的会员号				member_no
+使用后会员的剩余积分			point_left
+
+
+**************************会员积分码生成机制**************************
+一共有8位,全部都是0~9的数字
+1234 5678
+
+前两位对应可以获取到的积分扣减值
+11		100
+12		200
+13		300
+14		400
+15		500
+16		600
+17		700
+18		800
+19		900
+20		1000
+
+
+第3位到第8位, 一共是6位数字, 全部都是0~9的数字
+在1,000,000个数字中, 产生5,000个会员累计码
+5,000/1,000,000=0.005
+重复的几率为百分之0.5
+
+
+test
+扣减100
+11044604
+扣减500
+15062691
+
+
+
+
+
+小五调用的第三方API
+会员累计码
+[vs_api_url charset="utf-8" return="text"]http://1.chongqingweidao.sinaapp.com/input_consume_bonus_id.php?from=[vs_user=wxkey][/vs_api_url]
+会员功能
+[vs_api_url charset="utf-8" return="xml"]http://1.chongqingweidao.sinaapp.com/member.php?key=[vs=pa]&from=[vs_user=wxkey][/vs_api_url]
+测试功能
+[vs_api_url charset="utf-8" return="text"]http://1.chongqingweidao.sinaapp.com/test.php?from=[vs_user=wxkey][/vs_api_url]
+
+
+
+
+[vs_api_url charset="utf-8" return="text"]http://1.chongqingweidao.sinaapp.com/input_consume_bonus_id.php?key=[vs=pa]&from=[vs_user=wxkey][/vs_api_url]
+
+
+
+[vs_api_url charset="utf-8" return="xml"]http://1.chongqingweidao.sinaapp.com/vip.php?key=[vs=pa]&from=[vs_user=wxkey][/vs_api_url]
+
+
+
+
+INSERT INTO tb_his_consume(`bonus_before`,`bonus_after`,`act_bonus_before`,`act_bonus_after`,`member_no`,`fake_id`,`suggest_info`,`exe_date`) VALUES (,0,,100,"","oCtCnjrVW_sl8PA2tOVnyGAzt_VA","加入会员成功,免费赠送会员互动积分100点","2014-01-04 18:18:05");
+
+
+SELECT * FROM  `tb_his_consume` where DateDiff(exe_date,CURdate())>=-1 ORDER BY exe_date desc 
+
+
+
+SELECT tb_member.member_no as member_no,tb_member.weixin_id as weixin_id,question_user.openid as openid,question_user.reply_num as reply_num,question_user.score as score FROM  `question_user`,`tb_member` where question_user.openid=tb_member.fake_id  ORDER BY  question_user.score DESC 
+
+03 12      16 28 45
+
+qwq2845nag
+
+
+abcdefghijklmnpqrstuvwxyz
+
+
+oCtCnjhvHAPmYnQAk1iJYXtR3AJo
+oCtCnjqpZvOrNwVnSrLU3burRZQQ
+oCtCnjq4my1FtuaWPc_suwDxGzEE
+oCtCnjr076xMEDWj8CNM_27VgNyE
+oCtCnjro2zNba6gP_2ViCP2dQNag

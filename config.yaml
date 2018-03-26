@@ -1,0 +1,9 @@
+name: chongqingweidao
+version: 1
+accesskey: abc
+cron:
+    - description: cron test
+      url: insert_tb_exchange_check_id.php
+      schedule: $3 day of january 23:38
+      timezone: Beijing
+ 
